@@ -2,8 +2,8 @@ let img = document.querySelector('#img');
 
 function eventHandler(event){
     if (event.type == "dblclick"){
-        var xPos = event.clientX;
-        var yPos = event.clientY;
+        var xPos = event.offsetX;
+        var yPos = event.offsetY;
         var request = new XMLHttpRequest();
         let url = "/ck?x="+ xPos +"&y=" + yPos;
         request.open("GET", url, false);
@@ -18,4 +18,3 @@ function eventHandler(event){
 }
 
 img.addEventListener('dblclick', eventHandler);
-img.src = "/imgInput/g.png";
