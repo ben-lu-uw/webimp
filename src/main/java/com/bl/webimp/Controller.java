@@ -1,4 +1,4 @@
-package com.project.editor;
+package com.bl.webimp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,10 +10,10 @@ import java.io.IOException;
 
 @SpringBootApplication
 @RestController
-public class EditorApplication {
+public class Controller {
 
 	public static void main(String[] args) {
-		SpringApplication.run(EditorApplication.class, args);
+		SpringApplication.run(Controller.class, args);
 
 	}
 

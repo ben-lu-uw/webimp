@@ -1,4 +1,4 @@
-package com.project.editor;
+package com.bl.webimp;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
