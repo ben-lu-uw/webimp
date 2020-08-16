@@ -1,4 +1,23 @@
-let img = document.querySelector('#img');
+let load = document.querySelector("#loadimg")
+let img = document.querySelector("#img");
+
+function handleLoad(event){
+    if (event.type == "click"){
+        var request = new XMLHttpRequest();
+        let url = "/listfile";
+        request.open("GET", url, false);
+        request.send(null);
+        if (request.status == 200){
+            let name = request.response;
+            alert(name);
+            img.src = name;
+        }else{
+            alert(request.status + request.statusText);
+        }
+    }
+
+}
+load.addEventListener("click", handleLoad)
 
 function eventHandler(event){
     if (event.type == "dblclick"){
