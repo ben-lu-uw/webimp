@@ -17,7 +17,7 @@ function handleLoad(event){
     }
 
 }
-load.addEventListener("click", handleLoad)
+load.addEventListener("click", handleLoad);
 
 function eventHandler(event){
     if (event.type == "dblclick"){
@@ -27,7 +27,6 @@ function eventHandler(event){
         let url = "/ck?x="+ xPos +"&y=" + yPos;
         request.open("GET", url, false);
         request.send(null);
-        // console.log(xPos, yPos);
         if (request.status == 200){
             alert(request.responseText);
         }else{

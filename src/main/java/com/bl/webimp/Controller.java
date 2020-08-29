@@ -14,7 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootApplication
 @RestController
@@ -69,9 +69,14 @@ public class Controller {
 	public String ck(@RequestParam(value = "x", defaultValue = "0") int x,
 						@RequestParam(value = "y", defaultValue = "0") int y) throws Exception {
 		ChromaKey chromaKey = new ChromaKey();
-		chromaKey.multiProcess(rootLocation.toString(), "C:\\Users\\avtea\\Desktop\\Output\\a.png", x, y);
+		chromaKey.multiProcess(rootLocation.toString(), "C:\\Users\\avtea\\Desktop\\repo\\webimp\\src\\main\\resources\\static\\imgOutput\\img", x, y);
 		return String.format("Pixel at: %s %s!", x, y);
+	}
 
+	@PostMapping("/rsc")
+	public void rsc(@RequestBody List<PixelData> pixelData) throws IOException {
+		ReapplySelectChroma reapplySelectChroma = new ReapplySelectChroma();
+		reapplySelectChroma.reapply(pixelData);
 	}
 
 }
