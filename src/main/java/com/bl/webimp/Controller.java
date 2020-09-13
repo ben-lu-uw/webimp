@@ -6,6 +6,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
@@ -24,7 +25,20 @@ public class Controller {
 		SpringApplication.run(Controller.class, args);
 	}
 
-	private final Path rootLocation = Paths.get("C:\\Users\\avtea\\Desktop\\repo\\webimp\\src\\main\\resources\\static\\imgInput");
+	private String rootDir;
+
+	@PostConstruct
+	public void init() throws IOException {
+		ClassLoader classLoader = getClass().getClassLoader();
+		String resourceDir = classLoader.getResource(".").getFile();
+		File file = new File(resourceDir);
+		this.rootDir = file.getAbsolutePath() + "/static";
+		System.out.println(this.rootDir);
+	}
+
+	private Path inputLocation(){
+		return Paths.get(rootDir + "\\imgInput");
+	}
 
 	public void store(MultipartFile file) throws Exception {
 		String filename = StringUtils.cleanPath(file.getOriginalFilename());
@@ -38,7 +52,7 @@ public class Controller {
 								+ filename);
 			}
 			try (InputStream inputStream = file.getInputStream()) {
-				Files.copy(inputStream, this.rootLocation.resolve(filename),
+				Files.copy(inputStream, this.inputLocation().resolve(filename),
 						StandardCopyOption.REPLACE_EXISTING);
 			}
 		}
@@ -57,7 +71,7 @@ public class Controller {
 
 	@GetMapping("/listfile")
 	public String listFile(){
-		File folder = new File(rootLocation.toString());
+		File folder = new File(inputLocation().toString());
 		File[] files = folder.listFiles();
 		if(files.length > 0){
 			return "/imgInput/" + files[0].getName();
@@ -69,7 +83,7 @@ public class Controller {
 	public String ck(@RequestParam(value = "x", defaultValue = "0") int x,
 						@RequestParam(value = "y", defaultValue = "0") int y) throws Exception {
 		ChromaKey chromaKey = new ChromaKey();
-		chromaKey.multiProcess(rootLocation.toString(), "C:\\Users\\avtea\\Desktop\\repo\\webimp\\src\\main\\resources\\static\\imgOutput\\img", x, y);
+		chromaKey.multiProcess(inputLocation().toString(), rootDir + "\\imgOutput\\img", x, y);
 		return String.format("Pixel at: %s %s!", x, y);
 	}
 

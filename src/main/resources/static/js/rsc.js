@@ -3,9 +3,24 @@ var origCtx = origCanvas.getContext("2d");
 
 var origImg = new Image();
 origImg.addEventListener('load', () => {
+    
+    origCanvas.width = origImg.width;
+    origCanvas.height = origImg.height;
+
     origCtx.drawImage(origImg, 0, 0);
 }, false);
-origImg.src = "\\imgInput\\g.png";
+
+var request = new XMLHttpRequest();
+let url = "/listfile";
+request.open("GET", url, false);
+request.send(null);
+if (request.status == 200){
+    let name = request.response;
+    alert(name);
+    origImg.src = name;
+}else{
+    alert(request.status + request.statusText);
+}
 
 var canvas = document.querySelector("#reapply");
 var ctx = canvas.getContext("2d");
@@ -16,6 +31,8 @@ ctx.lineWidth = 1;
 
 var img = new Image();
 img.addEventListener('load', () => {
+    canvas.width = origImg.width;
+    canvas.height = origImg.height;
     ctx.drawImage(img, 0, 0);
 }, false);
 img.src = "\\imgOutput\\img0.png";
